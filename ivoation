@@ -1,0 +1,12 @@
+3. Define Fraud Detection Rules
+Establish rules to detect suspicious cross-country transactions:
+
+Unusual Device Locations:
+Identify if the device location for a deposit differs significantly from the withdrawal location.
+Flag scenarios where the deposit occurs in one country, and withdrawal occurs from a different device location outside the USA.
+Rapid Sequence of Transactions:
+Look for deposits followed by withdrawals within short time intervals.
+Validate if devices used in these transactions belong to different regions or countries.
+Transaction Patterns:
+Monitor accounts with repeated cross-border transactions.
+Correlate with device profiles for consistency (e.g., checking if the same device has been flagged previously).
