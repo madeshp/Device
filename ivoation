@@ -10,3 +10,81 @@ Validate if devices used in these transactions belong to different regions or co
 Transaction Patterns:
 Monitor accounts with repeated cross-border transactions.
 Correlate with device profiles for consistency (e.g., checking if the same device has been flagged previously).
+
+
+ Device Location Mismatch
+Rule: Flag transactions where:
+
+Deposit Location: The device's geolocation at the time of deposit is significantly different from the usual or historical locations for that account.
+Withdrawal Location: The device's geolocation at the time of withdrawal indicates a different country, especially one associated with high-risk activity or where the account holder has no history of activity.
+Logic:
+
+Use Iovation’s geolocation data (latitude, longitude, country).
+Compare geolocations of devices used for deposit and withdrawal.
+Look for patterns such as a deposit in the U.S. and withdrawal in a high-risk country like Russia, China, or Nigeria.
+Example:
+
+Deposit made from a device in New York, U.S., and a withdrawal occurs from a device in Lagos, Nigeria, within a short timeframe (e.g., 30 minutes).
+2. Unfamiliar Device Usage
+Rule: Flag transactions where:
+
+The device making a withdrawal has never been associated with the account before.
+The device score or trustworthiness (provided by Iovation) is below a predefined threshold.
+Logic:
+
+Use Iovation’s device fingerprinting to identify unique device IDs.
+Check the account's transaction history to see if the device has been used before.
+Assess the device's reputation score from Iovation (indicating its history of fraudulent behavior or anomalies).
+Example:
+
+Deposit made from a known, trusted device, but the withdrawal is made using a device flagged as risky or previously associated with fraudulent activity.
+3. Rapid Device Switching Across Countries
+Rule: Flag transactions where:
+
+The same account shows activity from devices located in different countries within an unusually short period.
+Logic:
+
+Use timestamps and geolocation data.
+Identify cases where the time difference between deposit and withdrawal is too short to account for physical travel between the two locations.
+Example:
+
+Deposit at 10:00 AM from a device in Chicago, U.S., followed by a withdrawal at 10:05 AM from a device in London, U.K.
+4. Multiple Accounts, Single Device
+Rule: Detect devices being used to transact across multiple accounts, especially when those accounts show cross-country deposit/withdrawal patterns.
+
+Logic:
+
+Use Iovation to track a unique device ID's activity across accounts.
+Flag if a single device is used to deposit into multiple U.S. accounts and then withdraw from multiple international locations.
+Example:
+
+Device ID XYZ123 is used for deposits into accounts A, B, and C in the U.S. and withdrawals from locations in different countries.
+5. Device and Network Anomalies
+Rule: Flag transactions involving:
+
+Devices that show suspicious characteristics such as:
+Use of VPNs or proxies to mask true location.
+Frequent changes in network configurations (e.g., IP address or ISP).
+Devices flagged as high-risk or blacklisted by Iovation.
+Logic:
+
+Utilize Iovation’s IP and network fingerprinting features.
+Cross-check device metadata against known VPN/proxy IP ranges.
+Leverage Iovation’s fraud network data to identify devices linked to past fraudulent activity.
+Example:
+
+Deposit from a U.S.-based IP, but the IP is identified as a VPN server. Withdrawal occurs using a different VPN server in another country.
+6. Account-Device Behavioral Changes
+Rule: Identify accounts exhibiting unusual device behavior compared to historical patterns:
+
+Account consistently used from a single country suddenly shows activity from multiple international locations.
+Device associated with low-risk activities starts performing high-risk transactions.
+Logic:
+
+Build a baseline for each account using Iovation’s device insights.
+Monitor for deviations, such as:
+Device used in high-risk countries.
+Device time zone mismatch.
+Example:
+
+An account historically accessed from personal devices in California suddenly makes a deposit via a mobile device in the U.S. and a withdrawal from a public computer in Europe.
